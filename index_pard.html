@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chat_pard</title>
+    <script src="./loader_bundle_chat.min.js"></script>
+
+</head>
+<body>
+
+<div id="chat-app"></div>
+
+
+    <script type="text/javascript">
+        window.sberCareChat.init({
+            startForm: 'Icon', // 'Chat' | 'Icon' | 'Bot' | 'Elena' | 'Conversations'
+            conversations: ['Chat', 'Bot'], //каждый должен быть описан в конфиге | 'Elena'
+
+            applicationName: 'RetailChatNew', // для вызова публичных методов
+            mountContainerId: 'chat-app', // id контейнера для рендера чата
+            theme: {
+                name: 'default', // "default" | "light" | "dark"
+                primaryColor: '#00ff00', // цвет смайликов
+                secondaryColor: '#404040' // цвет графических кнопок
+            },
+            search: {
+                enabled: true,
+                minLength: 2,
+            },
+            size: {
+                width: '330px', // string
+                height: '600px' // string
+            },
+            headerIsEnabled: true,
+            logMetrika: false,
+            yandexCounterId: 1175048, //счетчик для метрики
+            logError: false, // Zabbix метрика
+            chatEnabled: true,
+            chatInContent: false,
+
+            formsOption: {
+                Icon: {
+                    formAfterClick: 'Chat',
+                    iconImgUrl: '', // если iconType: 'custom'
+                    iconPosition: '', //на будущее
+                    zIndex: 99999,
+                },
+                Conversations: {
+                    withPicture: true,
+                    pictureUrl: 'http://localhost:8080/data/bot.lottie.json',
+                    title: 'Связь с банком',
+                    text: 'С радостью ответим на ваши вопросы в чате! Если бот не сможет помочь – к чату подключиться оператор.'
+                },
+            },
+
+            Chat: {
+                type: 'messanger',
+                name: 'Помощник от Сбербанка',
+                iconImgUrl: '', // если iconType: 'custom'
+                apiRestUrl: 'https://messenger-t.sberbank.ru:7766/api/device/auth_prelogin',
+                apiWSUrl: 'wss://messenger-t.sberbank.ru:7766/api/',
+                isNewOperatorPlace: false,
+                firstMessage: {
+                    text: 'Здравствуйте! Здесь вы можете задать общие вопросы по оформлению страховой пенсии',
+                    suggestions: [{
+                        text: 'Что нового?',
+                        order_id: 0
+                    }, {
+                        text: 'Что это такое?',
+                        order_id: 1
+                    }]
+                },
+                domain: 'sberbank.ru', // по умолчанию location.host
+                browserName: '', // для отправки auth_prelogin
+                browserVersion: '', // для отправки auth_prelogin
+                chatVersion: '', // для отправки auth_prelogin
+                reconnectMaxCount: 2,
+                reconnectDuration: 10,
+                initTimeout: 30,
+                suggestionShowTime: 60,
+                dictionary: {
+                    headerTitle: 'Связь с банком',
+                    botName: 'Помощник Сбербанка',
+                    inputPlaceholder: 'Напишите сообщение...',
+                    techBreakTitle: 'На данный момент отправка сообщений невозможна',
+                    techBreakText: 'Попробуйте зайти позже',
+                },
+            },
+
+            Bot: {
+                type: 'chatBotFlow',
+                name: 'Помощник от Сбербанка',
+                iconImgUrl: 'http://localhost:8080/data/consultant.png', // если iconType: 'custom'
+                crossOrigin: true,
+                botScenarioName: 'bot.json',
+                jsonSrc: 'http://localhost:8080/data/',
+            },
+
+        });
+    </script>
+</body>
+</html>
